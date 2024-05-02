@@ -54,7 +54,7 @@ def main():
 
         print("Response Text:")
         print(response.results.channels[0].alternatives[0].transcript)
-        export = open("output.txt", "w")
+        export = open("file_transcript.txt", "w")
         export.write(response.results.channels[0].alternatives[0].transcript)
         export.close()
         print("")
