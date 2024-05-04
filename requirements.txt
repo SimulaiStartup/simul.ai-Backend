@@ -1,4 +1,4 @@
-flask
+fastapi
 python-dotenv
 flasgger
 langchain_openai
