@@ -2,11 +2,12 @@ from fastapi import APIRouter, HTTPException, status
 
 from typing import List
 
-from AudioService import speech_to_text
+from services.AudioService import speech_to_text
+from services.MessageService import fetchData
 
 router = APIRouter()
 
 @router.get("/answer/", response_model=str, tags=["audio"])
-def process_and_answer(URL: str):
+def process_and_answer(URL: str, id: int):
     response = speech_to_text(URL)
-    return response
+    return fetchData(response, id)
