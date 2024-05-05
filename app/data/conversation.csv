@@ -1,0 +1,4 @@
+CONVERSATION_ID;ROTEIRO_ID;STAGE;MENSAGEM_ID;TRANSCRIPT;SENDER
+2;2;0;1;" ""Vamos começar a entrevista? Primeiramente, como funciona a estrutura HASHMAP?""";CHAT
+2;2;1;2;Um Hashmap é uma estrutura de dados que funciona como uma lista, porém cada item da lista tem um ponteiro que aponta para o próximo item da lista;USER
+2;2;1;3;Sua resposta foi mais ou menos, mas não incluiu todas as informações relevantes: a estrutura de dados Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores;CHAT
