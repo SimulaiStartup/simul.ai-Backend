@@ -2,10 +2,10 @@
 
 from fastapi import FastAPI # type: ignore
 from typing import List
-from src.conversation import AudioController
+from src import ConversationController
 
 app = FastAPI()
-app.include_router(AudioController.router)
+app.include_router(ConversationController.router)
 
 @app.get("/")
 def root():

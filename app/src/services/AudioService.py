@@ -17,7 +17,7 @@ def speech_to_text(URL):
     deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
 
     options: PrerecordedOptions = PrerecordedOptions(
-        language="en-US",
+        language="pt-BR",
         model="nova-2",
         smart_format=True,
     )

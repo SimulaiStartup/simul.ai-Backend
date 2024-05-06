@@ -1,0 +1,23 @@
+from fastapi import APIRouter, HTTPException, status
+
+from typing import List
+
+from src.services.AudioService import speech_to_text
+from src.services.MessageService import fetchData
+
+from pydantic import BaseModel
+
+router = APIRouter()
+
+@router.get("/conversation/")
+def conversation():
+    return ""
+
+
+class RequestBody(BaseModel):
+    URL: str  # Define the field "URL" which is expected in the request body
+
+@router.get("/conversation/{conversa_id}/{roteiro_id}", response_model=str, tags=["audio"])
+def process_and_answer(conversa_id:int, roteiro_id: int, body: RequestBody):
+    user_response = speech_to_text(body.URL)
+    return fetchData(conversa_id, roteiro_id, user_response)

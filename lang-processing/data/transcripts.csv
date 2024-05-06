@@ -1,4 +1,0 @@
-CONVERSATION_ID;ROTEIRO_ID;STAGE;MENSAGEM_ID;TRANSCRIPT;SENDER
-
-1;1;1;1;"Boa tarde Marcia, precisamos conversar sobre seu último exame de Sangue. Infelizmente o resultado foi HIV positivo";USER
-1;1;1;2;"Nossa doutor, sério? Mas eu nunca tive relações sexuais na vida toda!";CHAT
