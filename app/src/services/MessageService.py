@@ -20,19 +20,20 @@ MODEL = ChatOpenAI(model="gpt-4")
 def fetchData(conversa_id:int, roteiro_id:int, user_response:str) -> str:
 
     # df_messages é o dataframe com as mensagens referentes a conversa atual  
-    df_messages = pd.read_csv("../../data/transcripts.csv", sep=";", encoding="UTF-8")
+    df_messages = pd.read_csv("src/services/data/conversation.csv", sep=";", encoding="UTF-8")
 
     # df_script é o dataframe com os roteiros
-    df_script = pd.read_csv("../../data/roteiros.csv", sep=";", encoding="UTF-8")
+    df_script = pd.read_csv("src/services/data/roteiros.csv", sep=";", encoding="UTF-8")
 
     # df_script_stages é o dataframe com as etapas dos roteiros
-    df_script_stages = pd.read_csv("../../data/roteiro_stages.csv", sep=";", encoding="UTF-8")
+    df_script_stages = pd.read_csv("src/services/data/roteiro_stages.csv", sep=";", encoding="UTF-8")
 
     # pegamos o contexto, ou seja, todas as mensagens trocadas até agora na conversa
     context = df_messages[df_messages['CONVERSATION_ID'] == conversa_id]
 
     # se o contexto é vazio, pegamos a primeira mensagem do roteiro
     if len(context) == 0:
+        # Salva a mensagem na base de dados
         first_message = df_script_stages[(df_script_stages['ROTEIRO_ID'] == roteiro_id) & (df_script_stages['STAGE'] == 0)]
         first_message = {
             "CONVERSATION_ID" : [conversa_id], 
@@ -43,26 +44,32 @@ def fetchData(conversa_id:int, roteiro_id:int, user_response:str) -> str:
             "SENDER": ["CHAT"]
         }
         df_messages = pd.concat([df_messages, pd.DataFrame(first_message)], ignore_index=True)
-        df_messages.to_csv('data/conversation.csv', index=False, sep=";")
+        df_messages.to_csv('src/services/data/conversation.csv', index=False, sep=";")
         context = df_messages[df_messages['CONVERSATION_ID'] == conversa_id]
 
-
+    # Pegamos o contexto do roteiro
     df_script = df_script[df_script['ROTEIRO_ID'] == roteiro_id]
 
-    prompt = buildPrompt(context=context, df_scripts=df_script.iloc[0], message=user_response)
+    # O papel do chat no roteiro
+    chat_role = df_script["CHAT"].values[0]
 
-    stage = context['STAGE'].max()
+    # Pegamos a última etapa do roteiro
+    stage = context['STAGE'].max() + 1
+
+    # E o número da última mensagem
     m_id = context['MENSAGEM_ID'].max()
 
-
+    # Pegamos as opções da última etapa
     df_script_stages = df_script_stages[(df_script_stages['ROTEIRO_ID'] == roteiro_id) & (df_script_stages['STAGE'] == stage)]
     options = df_script_stages['OPTION'].astype(str).to_list()
 
+    # Construímos o prompt
+    prompt = buildPrompt(context=context, df_scripts=df_script.iloc[0], message=user_response, chat_role=chat_role, options_qtty=len(options))
+
+    # Pegamos a resposta do ChatGPT
     response = getResponse(options=options, prpt=prompt)
 
-    print(response)
-    print(options[response-1])
-
+    # Salva a resposta do usuário e a do Chat na base de dados
     data = {
         "CONVERSATION_ID" : [conversa_id, conversa_id], 
         "ROTEIRO_ID" : [roteiro_id, roteiro_id], 
@@ -72,18 +79,18 @@ def fetchData(conversa_id:int, roteiro_id:int, user_response:str) -> str:
         "SENDER": ["USER", "CHAT"]
     }
 
-
     user_and_chat_answers = pd.DataFrame(data)
     df_messages = pd.concat([df_messages, user_and_chat_answers], ignore_index=True)
-    df_messages.to_csv('data/conversation.csv', index=False, sep=";")
+    df_messages.to_csv('src/services/data/conversation.csv', index=False, sep=";")
 
-    return response
+    # Retorna a resposta do chat
+    return options[response-1]
 
 
 
-def buildPrompt(context: pd.DataFrame, df_scripts: pd.Series, message:str, chat_role:str):
+def buildPrompt(context: pd.DataFrame, df_scripts: pd.Series, message:str, chat_role:str, options_qtty:int):
 
-    prompt = "O contexto da Atividade é:" + df_scripts["CONTEXT"] + "\n" + f"Você deve atuar como o {chat_role}" + "\n\n Essa é a conversa até agora: \n"
+    prompt = "O contexto da Atividade para o usuário é:\n" + df_scripts["CONTEXT"] + "\n\n" + f"Você deve atuar como o {chat_role}" + "\n\n Essa é a conversa até agora: \n"
 
     messages = context['TRANSCRIPT'].to_list()
     senders = context['SENDER'].to_list()
@@ -92,19 +99,14 @@ def buildPrompt(context: pd.DataFrame, df_scripts: pd.Series, message:str, chat_
     for i in range(len(context)):
         prompt += df_scripts[senders[i]] + " - " + messages[i] + "\n\n"
 
-    prompt += "A última mensagem do/a " + df_scripts["USER"] + " foi:\n" + message
+    prompt += "A última mensagem do/a " + df_scripts["USER"] + " foi:\n" + message + "\n\n"
 
-    prompt+= '''
-Qual seria a próxima resposta mais apropriada, entre as seguintes:
+    prompt+= "Qual seria a próxima resposta mais apropriada, entre as seguintes:\n"
 
-    {Resposta1}
+    for i in range(options_qtty):
+        prompt += f"{i+1} - " + "{Resposta " + f"{i+1}" + "}\n"
 
-    {Resposta2}
-
-    {Resposta3}
-
-Responda somente com um número, correspondente a resposta escolhida
-    '''
+    prompt += "\nResponda SOMENTE com o número (1,2,3...) correspondente a resposta escolhida, em ordem"
 
     return prompt
 
@@ -116,6 +118,12 @@ def getResponse(options: List[str], prpt: str) -> int:
 
     chain = prompt | MODEL | output_parser
 
-    n = chain.invoke({f"Resposta{i+1}":options[i] for i in range(len(options))})
+    n = chain.invoke({f"Resposta {i+1}":options[i] for i in range(len(options))})
 
     return int(n)
+
+def main():
+    print(fetchData(1, "Em ciência da computação, Hashmap é uma estrutura de dados especial que associa a chave de pesquisa a valores. Seu objetivo é a partir de uma chave simples, fazer uma busca rápida e obter o valor desejado. É algumas vezes traduzidas traduzida como tabela de dispersão."))
+
+if __name__ == "__main__":
+    main()

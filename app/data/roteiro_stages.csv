@@ -1,9 +1,0 @@
-ROTEIRO_ID;STAGE;OPTION
-1;0;"Doutor, boa tarde. Eu sou a Sandra, e vim receber o diagnóstico dos exames que o senhor pediu."
-1;1;"Eu sou contra relacionamentos abertos pois eles tiram a graça de trair"
-1;1;"Eu não tenho nenhum tipo de contato com pessoas com HIV"
-1;1;"Eu consigo assobiar e chupar cana ao mesmo tempo"
-2;0;"Vamos começar a entrevista? Primeiramente, como funciona a estrutura HASHMAP?"
-2;1;"Isso não faz sentido algum! Essa estrutura de dados não tem nada a ver com um Hashmap"
-2;1;"Sua resposta foi mais ou menos, mas não incluiu todas as informações relevantes: a estrutura de dados Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores"
-2;1;"Perfeito, você acertou! A estrutura de dados Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores"
