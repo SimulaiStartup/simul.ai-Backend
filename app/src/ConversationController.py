@@ -13,11 +13,10 @@ router = APIRouter()
 def conversation():
     return ""
 
-
 class RequestBody(BaseModel):
-    URL: str  # Define the field "URL" which is expected in the request body
+    URL: str
 
-@router.get("/conversation/{conversa_id}/{roteiro_id}", response_model=str, tags=["audio"])
-def process_and_answer(conversa_id:int, roteiro_id: int, body: RequestBody):
+@router.post("/conversation/{conversa_id}/{roteiro_id}", response_model=str)
+def process_and_answer(conversa_id: int, roteiro_id: int, body: RequestBody):
     user_response = speech_to_text(body.URL)
     return fetchData(conversa_id, roteiro_id, user_response)
