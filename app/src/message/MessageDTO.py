@@ -4,8 +4,8 @@ from pydantic import BaseModel
 class MessageIn(BaseModel):
     id_conversation: int 
     id_roteiro: int
-    transcript: str
-    sender: str | None = "CHAT"
+    url: str
+    sender: str | None = "USER"
 
 
 class MessageOut(BaseModel):
