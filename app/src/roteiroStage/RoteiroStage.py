@@ -11,10 +11,10 @@ class RoteiroStage(Base):
     option = Column(String)
     id_roteiro = Column(Integer, ForeignKey("roteiros.id_roteiro"))
 
-    def to_RoteiroStageOut(self) -> RoteiroStageOut:
+    def to_roteiroStageOut(self) -> RoteiroStageOut:
         return RoteiroStageOut(
             id_roteiroStage=self.id_roteiroStage,
             stage=self.stage,
             option=self.option,
-            id_roteiro=self.id_package,
+            id_roteiro=self.id_roteiro,
         )

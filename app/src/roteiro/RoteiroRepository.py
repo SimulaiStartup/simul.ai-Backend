@@ -14,6 +14,7 @@ class RoteiroRepository:
 
     def get_all(db: Session) -> List[Roteiro]:
         roteiros = db.query(Roteiro).all()
+        print("entrei na função")
         return roteiros
     
     def get_by_conversation(db: Session, id_conversation: int) -> List[Roteiro]:

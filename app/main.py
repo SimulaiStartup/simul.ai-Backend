@@ -20,9 +20,9 @@ app.add_middleware(
 )
 
 # Include your router
-# app.include_router(MessageRoutes.router)
-# app.include_router(RoteiroRoutes.router)
-# app.include_router(RoteiroStageRoutes.router)
+app.include_router(MessageRoutes.router)
+app.include_router(RoteiroRoutes.router)
+app.include_router(RoteiroStageRoutes.router)
 
 # Define root route handler
 @app.get("/")
