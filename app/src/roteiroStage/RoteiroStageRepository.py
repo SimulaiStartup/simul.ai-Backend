@@ -6,8 +6,8 @@ from .RoteiroStageDTO import RoteiroStageIn
 from typing import List
 
 class RoteiroStageRepository:
-    def get(db: Session, id_roteiro: int) -> RoteiroStage:
-        roteiro = db.query(RoteiroStage).filter(RoteiroStage.id_roteiro == id_roteiro).first()
+    def get(db: Session, id_roteiroStage: int) -> RoteiroStage:
+        roteiro = db.query(RoteiroStage).filter(RoteiroStage.id_roteiroStage == id_roteiroStage).first()
         if roteiro:
             return roteiro
         raise HTTPException(status_code=404, detail="Roteiro não Encontrado")
