@@ -8,12 +8,12 @@ from typing import List, Dict
 
 import pandas as pd
 
-from Message import Message
-from MessageDTO import MessageIn
-from MessageRepository import MessageRepository
-from app.src.roteiro.RoteiroRepository import RoteiroRepository
-from app.src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
-from app.database import get_db
+from src.message.Message import Message
+from src.message.MessageDTO import MessageIn, MessageOut
+from src.message.MessageRepository import MessageRepository
+from src.roteiro.RoteiroRepository import RoteiroRepository
+from src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
+from database import get_db
 
 db = get_db()
 
@@ -62,7 +62,7 @@ def fetchData(message: Message) -> str:
     MessageRepository.create_chat_message(db, chat_message)
 
     # Retorna a resposta do chat
-    return options[response-1]
+    return MessageOut(url = options[response-1])
 
 
 

@@ -2,7 +2,6 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from .RoteiroStageDTO import RoteiroStageOut
 
 from database import Base
-from datetime import datetime
 
 class RoteiroStage(Base):
     __tablename__ = "roteiroStages"

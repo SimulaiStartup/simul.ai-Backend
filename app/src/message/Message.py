@@ -2,7 +2,6 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 
 from database import Base
 
-from MessageDTO import MessageOut
 
 class Message(Base):
     __tablename__ = "messages"

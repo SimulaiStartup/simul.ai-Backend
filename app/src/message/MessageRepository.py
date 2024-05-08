@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from app.src.message.MessageAux import fetchData
-from app.src.services.AudioService import speech_to_text
+from src.services.AudioService import speech_to_text
 
-from .Message import Message
-from .MessageDTO import MessageIn, MessageUpdate
+from src.message.Message import Message
+from src.message.MessageDTO import MessageIn
 from typing import List
 
 class MessageRepository:
@@ -45,7 +44,7 @@ class MessageRepository:
         db.commit()
         db.refresh(message)
 
-        return fetchData(message)
+        return message
     
     def create_chat_message(db: Session, message: MessageIn) -> Message:
         message = Message(

@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
 from .Roteiro import Roteiro
-from .RoteiroDTO import RoteiroIn, RoteiroUpdate
+from .RoteiroDTO import RoteiroIn
 from typing import List
 
 class RoteiroRepository:
@@ -28,13 +28,6 @@ class RoteiroRepository:
         db.commit()
         db.refresh(roteiro)
         return roteiro
-
-    def update(db: Session, id_roteiro: int, new: RoteiroUpdate) -> Roteiro:
-        rows_affected = db.query(Roteiro).filter(Roteiro.id_roteiro == id_roteiro).update(new.model_dump())
-        db.commit()
-        if rows_affected == 0:
-            raise HTTPException(status_code=404, detail="Roteiro não encontrada")
-        return RoteiroRepository.get(db, id_roteiro)
 
     def delete(db: Session, id_roteiro: int):
         rows_deleted = db.query(Roteiro).filter(Roteiro.id_roteiro == id_roteiro).delete()
