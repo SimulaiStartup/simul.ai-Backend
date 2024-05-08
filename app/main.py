@@ -1,6 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src import ConversationController
+from src.message import MessageRoutes
+from src.roteiro import RoteiroRoutes
+from src.roteiroStage import RoteiroStageRoutes
+from database import engine, Base
+
+# Cria todas as tabelas no banco de dados
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -14,7 +20,9 @@ app.add_middleware(
 )
 
 # Include your router
-app.include_router(ConversationController.router)
+app.include_router(MessageRoutes.router)
+app.include_router(RoteiroRoutes.router)
+app.include_router(RoteiroStageRoutes.router)
 
 # Define root route handler
 @app.get("/")

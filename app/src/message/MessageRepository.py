@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
+from app.src.message.MessageAux import fetchData
 from app.src.services.AudioService import speech_to_text
 
 from .Message import Message
@@ -31,7 +32,7 @@ class MessageRepository:
             return False 
         return True
 
-    def create_user_message(db: Session, message: MessageIn) -> Message:
+    def create_user_message(db: Session, message: MessageIn) -> str:
         message = Message(
             id_message = MessageRepository.get_current_message_id_by_conversation(db, message.id_conversation),
             id_conversation = message.id_conversation,
@@ -43,7 +44,8 @@ class MessageRepository:
         db.add(message)
         db.commit()
         db.refresh(message)
-        return message
+
+        return fetchData(message)
     
     def create_chat_message(db: Session, message: MessageIn) -> Message:
         message = Message(
