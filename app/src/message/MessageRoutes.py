@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status # type: ignore
 
-from typing import List
+from typing import List, Tuple
 from .MessageDTO import MessageIn, MessageOut
 from .Message import Message
 from .MessageRepository import MessageRepository
@@ -14,18 +14,23 @@ db = get_db()
 def get_message(id_message: int = None): 
     """Returns a Specific Message based on the id"""
     if id_message:
-        return [MessageRepository.get(db,id_message).map(lambda x: (x.transcript, x.sender))]
-    else:
-        return MessageRepository.get_all(db).map(lambda x: (x.transcript, x.sender))
+        message = MessageRepository.get(db,id_message)
+        return (message.transcript, message.sender)
+
+@router.get("/messages", response_model=List[str], tags=["message"])
+def get_all(): 
+    """Returns a Specific Message based on the id"""
+    return list(map(lambda x: (x.transcript, x.sender), MessageRepository.get_all(db)))
 
 @router.post("/messages", response_model=MessageOut, status_code=status.HTTP_201_CREATED, tags=["message"])
 def new_message(movIn : MessageIn):
     """Creates a New Message"""
 
     if MessageRepository.check_by_conversation(db, movIn.id_conversation):
-        return MessageRepository.create_user_message(db, movIn)
-    
-    message = MessageRepository.create_conversation(db, movIn)
+        message = MessageRepository.create_user_message(db, movIn).to_messageOut()
+    else:
+        message = MessageRepository.create_conversation(db, movIn)
+
     return fetchData(message)
 
 @router.delete("/messages/{id_message}", status_code=status.HTTP_204_NO_CONTENT, tags=["message"])
