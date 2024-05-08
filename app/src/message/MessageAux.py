@@ -4,11 +4,12 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-from typing import List
+from typing import List, Dict
 
 import pandas as pd
 
 from Message import Message
+from MessageDTO import MessageIn
 from MessageRepository import MessageRepository
 from app.src.roteiro.RoteiroRepository import RoteiroRepository
 from app.src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
@@ -41,35 +42,42 @@ def fetchData(message: Message) -> str:
     # Pegamos a última etapa do roteiro
     stage = message.stage
 
-
     # Pegamos as opções da última etapa
-    options = RoteiroStageRepository.get_by_stage_and_roteiro(db, stage, message.id_roteiro)
+    options = RoteiroStageRepository.get_by_stage_and_roteiro(db, stage, message.id_roteiro).map(lambda x: x.option)
 
     # Construímos o prompt
-    prompt = buildPrompt(context=context, df_scripts=df_script.iloc[0], message=user_response, chat_role=chat_role, options_qtty=len(options))
+    prompt = buildPrompt(context=context, roteiro=script.model_dump(), message=message.transcript, options_qtty=len(options))
 
     # Pegamos a resposta do ChatGPT
     response = getResponse(options=options, prpt=prompt)
 
+    chat_message = MessageIn(
+        id_conversation=message.id_conversation,
+        id_roteiro=message.id_roteiro,
+        url = options[response-1],
+        sender = 'chat'
+    )
+
     # Salva a resposta do usuário e a do Chat na base de dados
+    MessageRepository.create_chat_message(db, chat_message)
 
     # Retorna a resposta do chat
     return options[response-1]
 
 
 
-def buildPrompt(context: pd.DataFrame, roteiro: pd.Series, message:str, chat_role:str, options_qtty:int):
+def buildPrompt(context: List[Message], roteiro: Dict, message:str, options_qtty:int):
 
-    prompt = "O contexto da Atividade para o usuário é:\n" + df_scripts["CONTEXT"] + "\n\n" + f"Você deve atuar como o {chat_role}" + "\n\n Essa é a conversa até agora: \n"
+    prompt = "O contexto da Atividade para o usuário é:\n" + roteiro["context"] + "\n\n" + f"Você deve atuar como o {roteiro['chat']}" + "\n\n Essa é a conversa até agora: \n"
 
-    messages = context['TRANSCRIPT'].to_list()
-    senders = context['SENDER'].to_list()
+    messages = context.map(lambda x: x.transcript)
+    senders = context.map(lambda x: x.sender)
 
 
-    for i in range(len(context)):
-        prompt += df_scripts[senders[i]] + " - " + messages[i] + "\n\n"
+    for i in range(len(context)-1):
+        prompt += roteiro[senders[i].lower()] + " - " + messages[i] + "\n\n"
 
-    prompt += "A última mensagem do/a " + df_scripts["USER"] + " foi:\n" + message + "\n\n"
+    prompt += "A última mensagem do/a " + roteiro["user"] + " foi:\n" + message + "\n\n"
 
     prompt+= "Qual seria a próxima resposta mais apropriada, entre as seguintes:\n"
 
