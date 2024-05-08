@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import List
 
 from src.services.AudioService import speech_to_text
-from src.services.MessageService import fetchData
+from app.src.message.MessageService import fetchData
 
 from pydantic import BaseModel
 
