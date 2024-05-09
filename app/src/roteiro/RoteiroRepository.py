@@ -3,6 +3,7 @@ from fastapi import HTTPException
 
 from .Roteiro import Roteiro
 from .RoteiroDTO import RoteiroIn
+from ..roteiroStage.RoteiroStageRepository import RoteiroStageRepository
 from typing import List
 
 class RoteiroRepository:
@@ -31,6 +32,7 @@ class RoteiroRepository:
         return roteiro
 
     def delete(db: Session, id_roteiro: int):
+        RoteiroStageRepository.delete_all_by_roteiro(db, id_roteiro)
         rows_deleted = db.query(Roteiro).filter(Roteiro.id_roteiro == id_roteiro).delete()
         db.commit()
         if rows_deleted == 0:
