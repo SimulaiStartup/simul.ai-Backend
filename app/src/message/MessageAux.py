@@ -28,8 +28,6 @@ MODEL = ChatOpenAI(model="gpt-4")
 
 def fetchData(message: Message) -> str:
 
-    
-
     # pegamos o contexto, ou seja, todas as mensagens trocadas até agora na conversa
     context = MessageRepository.get_by_conversation(db, message.id_conversation)
 
@@ -101,7 +99,7 @@ def getResponse(options: List[str], prpt: str) -> int:
     return int(n)
 
 def main():
-    print(fetchData(1, "Em ciência da computação, Hashmap é uma estrutura de dados especial que associa a chave de pesquisa a valores. Seu objetivo é a partir de uma chave simples, fazer uma busca rápida e obter o valor desejado. É algumas vezes traduzidas traduzida como tabela de dispersão."))
+    print(fetchData("Em ciência da computação, Hashmap é uma estrutura de dados especial que associa a chave de pesquisa a valores. Seu objetivo é a partir de uma chave simples, fazer uma busca rápida e obter o valor desejado. É algumas vezes traduzidas traduzida como tabela de dispersão."))
 
 if __name__ == "__main__":
     main()

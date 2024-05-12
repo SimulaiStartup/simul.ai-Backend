@@ -5,6 +5,7 @@ class RoteiroStageIn(BaseModel):
     id_roteiro: int 
     stage: int 
     option: str 
+    video: str
 
 
 class RoteiroStageOut(BaseModel):
@@ -12,3 +13,4 @@ class RoteiroStageOut(BaseModel):
     id_roteiro: int 
     stage: int 
     option: str 
+    video: str

@@ -49,5 +49,3 @@ class RoteiroStageRepository:
     def delete_all_by_roteiro(db: Session, id_roteiro: int):
         rows_deleted = db.query(RoteiroStage).filter(RoteiroStage.id_roteiro == id_roteiro).delete()
         db.commit()
-        if rows_deleted == 0:
-            raise HTTPException(status_code=404, detail="Roteiro não encontrado")

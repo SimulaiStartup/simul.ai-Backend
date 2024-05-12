@@ -11,14 +11,13 @@ class RoteiroRepository:
         roteiro = db.query(Roteiro).filter(Roteiro.id_roteiro == id_roteiro).first()
         if roteiro:
             return roteiro
-        raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+        raise HTTPException(status_code=404, detail="Roteiro não encontrado")
 
     def get_all(db: Session) -> List[Roteiro]:
         roteiros = db.query(Roteiro).all()
-        print("entrei na função")
         return roteiros
     
-    def get_by_conversation(db: Session, id_conversation: int) -> List[Roteiro]:
+    #def get_by_conversation(db: Session, id_conversation: int) -> List[Roteiro]:
         roteiros = db.query(Roteiro).filter(Roteiro.id_conversation == id_conversation).all()
         if len(roteiros) == 0:
             raise HTTPException(status_code=404, detail="Nenhuma conversa encontrada para o ID enviado")  

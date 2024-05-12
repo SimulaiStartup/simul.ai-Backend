@@ -9,6 +9,7 @@ class RoteiroStage(Base):
     id_roteiroStage =  Column(Integer, primary_key=True, index=True)
     stage =  Column(Integer)
     option = Column(String)
+    video = Column(String)
     id_roteiro = Column(Integer, ForeignKey("roteiros.id_roteiro"))
 
     def to_roteiroStageOut(self) -> RoteiroStageOut:
@@ -17,4 +18,5 @@ class RoteiroStage(Base):
             stage=self.stage,
             option=self.option,
             id_roteiro=self.id_roteiro,
+            video=self.video
         )

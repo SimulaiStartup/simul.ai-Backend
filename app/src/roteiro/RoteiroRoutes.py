@@ -17,7 +17,6 @@ def get_roteiro(id_roteiro: int = None):
 @router.get("/roteiros", response_model=List[RoteiroOut], tags=["roteiro"])
 def get_all(): 
     """Returns a Specific Roteiro based on the id"""
-    print("entrei na rota")
     return list(map(lambda x: x.to_roteiroOut(), RoteiroRepository.get_all(db)))
 
 @router.post("/roteiros", response_model=RoteiroOut, status_code=status.HTTP_201_CREATED, tags=["roteiro"])
