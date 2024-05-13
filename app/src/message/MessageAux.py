@@ -41,7 +41,7 @@ def fetchData(message: Message) -> str:
     stage = message.stage
 
     # Pegamos as opções da última etapa
-    options = RoteiroStageRepository.get_by_stage_and_roteiro(db, stage, message.id_roteiro).map(lambda x: x.option)
+    options = list(map(lambda x: x.option, RoteiroStageRepository.get_by_stage_and_roteiro(db, stage, message.id_roteiro)))
 
     # Construímos o prompt
     prompt = buildPrompt(context=context, roteiro=script.model_dump(), message=message.transcript, options_qtty=len(options))
@@ -68,8 +68,8 @@ def buildPrompt(context: List[Message], roteiro: Dict, message:str, options_qtty
 
     prompt = "O contexto da Atividade para o usuário é:\n" + roteiro["context"] + "\n\n" + f"Você deve atuar como o {roteiro['chat']}" + "\n\n Essa é a conversa até agora: \n"
 
-    messages = context.map(lambda x: x.transcript)
-    senders = context.map(lambda x: x.sender)
+    messages = list(map(lambda x: x.transcript, context))
+    senders = list(map(lambda x: x.sender, context))
 
 
     for i in range(len(context)-1):
