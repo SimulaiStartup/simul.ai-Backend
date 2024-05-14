@@ -1,8 +1,0 @@
-ROTEIRO_ID;STAGE;OPTION
-1;0;"Vamos começar a entrevista? Primeiramente, como funciona a estrutura HASHMAP?"
-1;1;"Isso não faz sentido algum! Essa estrutura de dados não tem nada a ver com um Hashmap. Um Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores. Agora me explique o que é uma lista ligada"
-1;1;"Sua resposta foi mais ou menos, mas não incluiu todas as informações relevantes: a estrutura de dados Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores. Agora me explique o que é uma lista ligada"
-1;1;"Perfeito, você acertou! A estrutura de dados Hashmap é uma estrutura de dados que associa chaves de pesquisa a valores. Agora me explique o que é uma lista ligada"
-1;2;"Perfeito! Sua descrição de uma lista ligada está ótima."
-1;2;"Sua resposta foi mais ou menos, mas não incluiu todas as informações relevantes: uma lista ligada é uma estrutura de dados que consiste em uma sequência de elementos, onde cada elemento contém um valor e um ponteiro para o próximo elemento."
-1;2;"Isso não faz sentido algum! Essa estrutura de dados não tem nada a ver com uma lista ligada. Uma lista ligada é uma estrutura de dados que consiste em uma sequência de elementos, onde cada elemento contém um valor e um ponteiro para o próximo elemento."

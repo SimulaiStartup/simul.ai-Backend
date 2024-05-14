@@ -1,0 +1,104 @@
+from sqlalchemy.orm import Session
+from fastapi import HTTPException
+
+from src.message.Message import Message
+from src.message.MessageDTO import MessageIn
+from src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
+from typing import List
+
+class MessageRepository:
+
+    def get_all(db: Session) -> List[Message]:
+        messages = db.query(Message).all()
+        return messages
+    
+    def get_by_conversation(db: Session, id_conversation: int) -> List[Message]:
+        messages = db.query(Message).filter(Message.id_conversation == id_conversation).all()
+        if len(messages) == 0:
+            raise HTTPException(status_code=404, detail="Nenhuma mensagem encontrada pra essa conversa")  
+        return messages
+    
+    def get_by_roteiro(db: Session, id_roteiro: int) -> List[Message]:
+        messages = db.query(Message).filter(Message.id_roteiro == id_roteiro).all()
+        if len(messages) == 0:
+            raise HTTPException(status_code=404, detail="Nenhuma mensagem encontrada pra esse roteiro")  
+        return messages
+    
+    def check_by_conversation(db: Session, id_conversation: int) -> bool:
+        messages = db.query(Message).filter(Message.id_conversation == id_conversation).all()
+        if len(messages) == 0:
+            return False 
+        return True
+
+    def initialize_conversation(db: Session, message: MessageIn) -> Message:
+        message = Message(
+            id_message = 0,
+            id_conversation = message.id_conversation,
+            id_roteiro = message.id_roteiro,
+            stage = 0,
+            next_stage = 1,
+            transcript = RoteiroStageRepository.get_by_stage_and_roteiro(db, 0, message.id_roteiro)[0].option,
+            sender = False
+        )
+        db.add(message)
+        db.commit()
+        db.refresh(message)
+
+        return message
+    
+    def create_user_message(db: Session, message: MessageIn) -> Message:
+        message = Message(
+            id_message = MessageRepository.get_next_message_by_conversation(db, message.id_conversation),
+            id_conversation = message.id_conversation,
+            id_roteiro = message.id_roteiro,
+            stage = MessageRepository.get_stage_by_conversation(db, message.id_conversation),
+            next_stage = MessageRepository.get_next_stage_by_conversation(db, message.id_conversation),
+            transcript = message.url,
+            sender = True
+        )
+        db.add(message)
+        db.commit()
+        db.refresh(message)
+        return message
+    
+    def create_chat_message(db: Session, id_conversation: int, id_roteiro: int, option: str, stage:int, next_stage:int) -> Message:
+        message = Message(
+            id_message = MessageRepository.get_next_message_by_conversation(db, id_conversation),
+            id_conversation = id_conversation,
+            id_roteiro = id_roteiro,
+            stage = stage,
+            next_stage = next_stage,
+            transcript = option,
+            sender = False
+        )
+        db.add(message)
+        db.commit()
+        db.refresh(message)
+        return message
+        
+    def delete_conversation(db: Session, id_conversation: int):
+        rows_deleted = db.query(Message).filter(Message.id_conversation == id_conversation).delete()
+        db.commit()
+        if rows_deleted == 0:
+            raise HTTPException(status_code=404, detail="Message não encontrada")
+    
+    def get_next_stage_by_conversation(db : Session, id_conversation : int):
+        messages = MessageRepository.get_by_conversation(db, id_conversation)
+
+        stage = messages[-1].next_stage
+
+        return stage
+    
+    def get_stage_by_conversation(db : Session, id_conversation : int):
+        messages = MessageRepository.get_by_conversation(db, id_conversation)
+
+        stage = messages[-1].stage
+
+        return stage
+    
+    def get_next_message_by_conversation(db : Session, id_conversation : int) -> int:
+        messages = MessageRepository.get_by_conversation(db, id_conversation)
+
+        id_message = messages[-1].id_message + 1
+
+        return id_message
