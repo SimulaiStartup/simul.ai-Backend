@@ -52,12 +52,8 @@ def fetchData(message: MessageIn) -> str:
     # Construímos o prompt
     prompt = buildPrompt(context=full_context, roteiro=script.model_dump(), message=message.url, options_qtty=len(options))
 
-    print(prompt)
-
     # Pegamos a resposta do ChatGPT
     response = getResponse(options=options, prpt=prompt)
-
-    print(response)
 
     if response == -1:
         failed_response = RoteiroStageRepository.get_by_stage_and_roteiro(db, -1, message.id_roteiro)[0]
@@ -81,9 +77,6 @@ def buildPrompt(context: List[str], roteiro: Dict, message:str, options_qtty:int
 
     senders = ["user" if x[0] else "chat" for x in context]
     messages = [x[1] for x in context]
-
-    print(senders)
-    print(messages)
 
     for i in range(len(context)):
         prompt += roteiro[senders[i]] + " - " + messages[i] + "\n\n"

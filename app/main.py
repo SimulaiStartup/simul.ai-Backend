@@ -36,5 +36,5 @@ def root():
 
 @app.post("/conversation", response_model=MessageOut)
 def process_and_answer(body: MessageIn):
-    #body.url = speech_to_text(body.url)
+    body.url = speech_to_text(body.url)
     return fetchData(body)
