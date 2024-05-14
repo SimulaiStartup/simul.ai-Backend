@@ -9,18 +9,7 @@ from database import get_db
 router = APIRouter()
 db = get_db()
 
-# Não entendi o ponto dessas rotas
-#@router.get("/roteiros/stages/", response_model=List[RoteiroStageOut], tags=["roteiro"])
-#def get_all(): 
-"""Returns a Specific RoteiroStage based on the id"""
-    #return list(map(lambda x: x.to_roteiroStageOut(), RoteiroStageRepository.get_all(db)))
-    
-#@router.get("/roteiros/stages/{id_roteiro}", response_model=List[RoteiroStageOut], tags=["roteiro"])
-#def get_roteiro(id_roteiro: int = None): 
-"""Returns a Specific RoteiroStage based on the id"""
-    #return [RoteiroStageRepository.get(db,id_roteiro).to_roteiroStageOut()]
- 
-    
+
 @router.get("/stages/{id_roteiro}", response_model=List[RoteiroStageOut], tags=["roteiro"])
 def get_all_stages_by_roteiro(id_roteiro: int): 
     """Returns all options based on the id for the Roteiro"""

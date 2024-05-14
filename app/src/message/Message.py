@@ -10,7 +10,6 @@ class Message(Base):
     id_message =  Column(Integer, primary_key=True, index=True)
     id_roteiro = Column(Integer, ForeignKey("roteiros.id_roteiro"))
     stage = Column(Integer)
+    next_stage = Column(Integer)
     transcript = Column(String)
     sender = Column(Boolean, default=True)
-
-

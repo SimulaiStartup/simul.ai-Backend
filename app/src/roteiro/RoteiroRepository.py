@@ -16,12 +16,6 @@ class RoteiroRepository:
     def get_all(db: Session) -> List[Roteiro]:
         roteiros = db.query(Roteiro).all()
         return roteiros
-    
-    #def get_by_conversation(db: Session, id_conversation: int) -> List[Roteiro]:
-        roteiros = db.query(Roteiro).filter(Roteiro.id_conversation == id_conversation).all()
-        if len(roteiros) == 0:
-            raise HTTPException(status_code=404, detail="Nenhuma conversa encontrada para o ID enviado")  
-        return roteiros
 
     def create(db: Session, roteiro: RoteiroIn) -> Roteiro:
         roteiro = Roteiro(**roteiro.model_dump())

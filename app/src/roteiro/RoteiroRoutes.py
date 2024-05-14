@@ -9,10 +9,10 @@ from database import get_db
 router = APIRouter()
 db = get_db()
 
-@router.get("/roteiros/{id_roteiro}", response_model=List[RoteiroOut], tags=["roteiro"])
+@router.get("/roteiros/{id_roteiro}", response_model=RoteiroOut, tags=["roteiro"])
 def get_roteiro(id_roteiro: int = None): 
     """Returns a Specific Roteiro based on the id"""
-    return [RoteiroRepository.get(db,id_roteiro).to_roteiroOut()]
+    return RoteiroRepository.get(db,id_roteiro).to_roteiroOut()
 
 @router.get("/roteiros", response_model=List[RoteiroOut], tags=["roteiro"])
 def get_all(): 
