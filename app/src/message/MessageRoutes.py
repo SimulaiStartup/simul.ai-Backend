@@ -32,3 +32,7 @@ def new_message(movIn : MessageIn):
 def deleta_conversation(id_conversation: str):
     """Deletes an entire Conversation's information"""
     return MessageRepository.delete_conversation(db, id_conversation)
+
+@router.delete("/messages", status_code=status.HTTP_204_NO_CONTENT, tags=["message"])
+def delete_all():
+    return MessageRepository.delete_all(db)
