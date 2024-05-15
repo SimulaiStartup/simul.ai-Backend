@@ -6,3 +6,4 @@ verboselogs
 deepgram-sdk
 pandas
 numpy
+sqlalchemy
