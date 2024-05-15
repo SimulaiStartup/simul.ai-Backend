@@ -7,3 +7,5 @@ deepgram-sdk
 pandas
 numpy
 sqlalchemy
+gunicorn 
+psycopg2
