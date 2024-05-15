@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 
 from database import Base
 
@@ -13,3 +13,4 @@ class Message(Base):
     next_stage = Column(Integer)
     transcript = Column(String)
     sender = Column(Boolean, default=True)
+    data = Column(DateTime)

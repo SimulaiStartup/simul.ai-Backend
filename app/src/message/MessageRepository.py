@@ -5,6 +5,7 @@ from src.message.Message import Message
 from src.message.MessageDTO import MessageIn
 from src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
 from typing import List
+from datetime import datetime
 
 class MessageRepository:
 
@@ -38,7 +39,8 @@ class MessageRepository:
             stage = 0,
             next_stage = 1,
             transcript = RoteiroStageRepository.get_by_stage_and_roteiro(db, 0, message.id_roteiro)[0].option,
-            sender = False
+            sender = False,
+            data = message.data
         )
         db.add(message)
         db.commit()
@@ -54,7 +56,8 @@ class MessageRepository:
             stage = MessageRepository.get_stage_by_conversation(db, message.id_conversation),
             next_stage = MessageRepository.get_next_stage_by_conversation(db, message.id_conversation),
             transcript = message.url,
-            sender = True
+            sender = True,
+            data = message.data
         )
         db.add(message)
         db.commit()
@@ -69,7 +72,8 @@ class MessageRepository:
             stage = stage,
             next_stage = next_stage,
             transcript = option,
-            sender = False
+            sender = False,
+            data = datetime.now()
         )
         db.add(message)
         db.commit()
@@ -102,3 +106,9 @@ class MessageRepository:
         id_message = messages[-1].id_message + 1
 
         return id_message
+    
+    def delete_all(db: Session):
+        rows_deleted = db.query(Message).delete()
+        db.commit()
+        if rows_deleted == 0:
+            raise HTTPException(status_code=404, detail="Message não encontrada")
