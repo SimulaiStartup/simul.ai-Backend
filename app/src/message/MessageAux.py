@@ -29,7 +29,7 @@ MODEL = ChatOpenAI(model="gpt-4")
 
 
 def fetchData(message: MessageIn) -> str:
-
+    print("começo")
     # pegamos o contexto, ou seja, todas as mensagens trocadas até agora na conversa
     if MessageRepository.check_by_conversation(db, message.id_conversation):
         context = MessageRepository.get_by_conversation(db, message.id_conversation)
@@ -37,18 +37,23 @@ def fetchData(message: MessageIn) -> str:
         # se a conversa tiver acabado de começar, inicializamos ela
         context = [MessageRepository.initialize_conversation(db, message)]
 
+    print("pegando o roteiro")
     # Pegamos o contexto do roteiro
     script = Roteiro.to_roteiroOut(RoteiroRepository.get(db, message.id_roteiro))
 
+    print("pegando a próxima etapa")
     # Pegamos a próxima etapa da conversa
     next_stage = MessageRepository.get_next_stage_by_conversation(db, message.id_conversation)
 
+    print("pegando as opções")
     # Pegamos as opções da última etapa
     options_roteiro = RoteiroStageRepository.get_by_stage_and_roteiro(db, next_stage, message.id_roteiro)
     options = [option.option for option in options_roteiro]
 
+    print("construindo o prompt")
     full_context = [(message.sender, message.transcript) for message in context]
 
+    print("pegando o prompt")
     # Construímos o prompt
     prompt = buildPrompt(context=full_context, roteiro=script.model_dump(), message=message.url, options_qtty=len(options))
     print(prompt)
