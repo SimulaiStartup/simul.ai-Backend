@@ -3,7 +3,7 @@ from fastapi import HTTPException
 
 from src.message.Message import Message
 from src.message.MessageDTO import MessageIn
-from src.roteiroStage.RoteiroStageRepository import RoteiroStageRepository
+from src.option.OptionRepository import OptionRepository
 from typing import List
 from datetime import datetime
 
@@ -36,9 +36,8 @@ class MessageRepository:
             id_message = 0,
             id_conversation = message.id_conversation,
             id_roteiro = message.id_roteiro,
-            stage = 0,
-            next_stage = 1,
-            transcript = RoteiroStageRepository.get_by_stage_and_roteiro(db, 0, message.id_roteiro)[0].option,
+            tag = 'Init',
+            transcript = OptionRepository.get_by_stage_and_roteiro(db, 0, message.id_roteiro)[0].option,
             sender = False,
             data = message.data
         )
@@ -48,13 +47,12 @@ class MessageRepository:
 
         return message
     
-    def create_user_message(db: Session, message: MessageIn) -> Message:
+    def create_user_message(db: Session, message: MessageIn, tag: str) -> Message:
         message = Message(
             id_message = MessageRepository.get_next_message_by_conversation(db, message.id_conversation),
             id_conversation = message.id_conversation,
             id_roteiro = message.id_roteiro,
-            stage = MessageRepository.get_stage_by_conversation(db, message.id_conversation),
-            next_stage = MessageRepository.get_next_stage_by_conversation(db, message.id_conversation),
+            tag = tag,
             transcript = message.url,
             sender = True,
             data = message.data
@@ -64,13 +62,12 @@ class MessageRepository:
         db.refresh(message)
         return message
     
-    def create_chat_message(db: Session, id_conversation: int, id_roteiro: int, option: str, stage:int, next_stage:int) -> Message:
+    def create_chat_message(db: Session, id_conversation: int, id_roteiro: int, option: str, tag:str) -> Message:
         message = Message(
             id_message = MessageRepository.get_next_message_by_conversation(db, id_conversation),
             id_conversation = id_conversation,
             id_roteiro = id_roteiro,
-            stage = stage,
-            next_stage = next_stage,
+            tag = tag,
             transcript = option,
             sender = False,
             data = datetime.now()
@@ -86,19 +83,7 @@ class MessageRepository:
         if rows_deleted == 0:
             raise HTTPException(status_code=404, detail="Message não encontrada")
     
-    def get_next_stage_by_conversation(db : Session, id_conversation : int):
-        messages = MessageRepository.get_by_conversation(db, id_conversation)
-
-        stage = messages[-1].next_stage
-
-        return stage
     
-    def get_stage_by_conversation(db : Session, id_conversation : int):
-        messages = MessageRepository.get_by_conversation(db, id_conversation)
-
-        stage = messages[-1].stage
-
-        return stage
     
     def get_next_message_by_conversation(db : Session, id_conversation : int) -> int:
         messages = MessageRepository.get_by_conversation(db, id_conversation)

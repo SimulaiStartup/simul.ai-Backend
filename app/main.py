@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.message import MessageRoutes
 from src.roteiro import RoteiroRoutes
-from src.roteiroStage import RoteiroStageRoutes
+from src.option import OptionRoutes
 from database import engine, Base
 from src.services.AudioService import speech_to_text
 from src.message.MessageAux import fetchData
@@ -27,7 +27,7 @@ app.add_middleware(
 # Include your router
 app.include_router(MessageRoutes.router)
 app.include_router(RoteiroRoutes.router)
-app.include_router(RoteiroStageRoutes.router)
+app.include_router(OptionRoutes.router)
 
 # Define root route handler
 @app.get("/")
@@ -36,6 +36,6 @@ def root():
 
 @app.post("/conversation", response_model=MessageOut)
 def process_and_answer(body: MessageIn):
-    body.url = speech_to_text(body.url)
+    # body.url = speech_to_text(body.url)
     print(body.url)
     return fetchData(body)

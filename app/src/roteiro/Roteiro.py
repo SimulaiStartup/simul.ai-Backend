@@ -1,5 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from .RoteiroDTO import RoteiroOut
+from typing import List
 
 from database import Base
 from datetime import datetime
@@ -11,6 +12,8 @@ class Roteiro(Base):
     context = Column(String)
     chat = Column(String)
     user = Column(String)
+    tags = Column(List[String])
+
 
     def to_roteiroOut(self) -> RoteiroOut:
         return RoteiroOut(
