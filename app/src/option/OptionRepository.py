@@ -24,6 +24,13 @@ class OptionRepository:
             raise HTTPException(status_code=404, detail="Roteiro inexistente ou nenhum tag encontrada")  
         return options
     
+    def get_tags_by_roteiro(db: Session, id_roteiro: int) -> List[Option]:
+        options = OptionRepository.get_all_by_roteiro(db, id_roteiro)
+        if len(options) == 0:
+            raise HTTPException(status_code=404, detail="Roteiro inexistente ou nenhum tag encontrada")  
+        
+        return set(map(lambda x: x.tag, options))
+    
     def get(db: Session, id_option: int) -> Option:
         option = db.query(Option).filter(Option.id_option == id_option).first()
         if option:

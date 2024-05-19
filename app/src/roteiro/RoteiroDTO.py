@@ -5,7 +5,6 @@ class RoteiroIn(BaseModel):
     context: str 
     chat: str 
     user: str
-    tags: List[str]
 
 
 class RoteiroOut(BaseModel):
@@ -13,4 +12,3 @@ class RoteiroOut(BaseModel):
     context: str 
     chat: str 
     user: str 
-    tags: List[str]

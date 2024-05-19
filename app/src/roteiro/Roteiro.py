@@ -12,7 +12,6 @@ class Roteiro(Base):
     context = Column(String)
     chat = Column(String)
     user = Column(String)
-    tags = Column(List[String])
 
 
     def to_roteiroOut(self) -> RoteiroOut:

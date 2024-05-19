@@ -37,7 +37,7 @@ class MessageRepository:
             id_conversation = message.id_conversation,
             id_roteiro = message.id_roteiro,
             tag = 'Init',
-            transcript = OptionRepository.get_by_stage_and_roteiro(db, 0, message.id_roteiro)[0].option,
+            transcript = message.url,
             sender = False,
             data = message.data
         )

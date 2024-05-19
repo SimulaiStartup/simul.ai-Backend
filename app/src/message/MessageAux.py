@@ -36,7 +36,7 @@ def fetchNextTag(transcript: str, roteiro: RoteiroOut):
         Dada a mensagem '{transcript}', ela diz respeito a qual da opções a seguir:
     '''
 
-    for tag in roteiro.tags:
+    for tag in OptionRepository.get_tags_by_roteiro(db, roteiro.id_roteiro):
         prpt += '\n ' + tag + ' \n'
 
     prpt += '\n {question}'
@@ -77,7 +77,7 @@ def fetchData(message: MessageIn) -> str:
     print("pegando as opções")
     # Pegamos as opções da última etapa
     options_roteiro = OptionRepository.get_by_tag_and_roteiro(db, next_tag, message.id_roteiro)
-    options = [option.option for option in options_roteiro]
+    options = [option.text for option in options_roteiro]
 
 
     print("pegando o prompt")
@@ -90,14 +90,14 @@ def fetchData(message: MessageIn) -> str:
     print("Resposta do Chat: " + str(response))
 
     if response == -1:
-        failed_response = OptionRepository.get_by_stage_and_roteiro(db, -1, message.id_roteiro)[0]
+        failed_response = OptionRepository.get_by_tag_and_roteiro(db, 'Confusão', message.id_roteiro)[0]
         return MessageOut(link = failed_response.video, end=False)
 
     # Salva a resposta do usuário e a do Chat na base de dados
-    MessageRepository.create_user_message(db, message)
+    MessageRepository.create_user_message(db, message, next_tag)
 
     # Salva a resposta do usuário e a do Chat na base de dados
-    MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[response-1].option, options_roteiro[response-1].stage, options_roteiro[response-1].next_tag)
+    MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[response-1].text,next_tag)
 
     # Retorna a resposta do chat
     if next_tag != 'END': return MessageOut(link = options_roteiro[response-1].video, end=False)

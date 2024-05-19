@@ -30,6 +30,14 @@ def new_roteiro_option(movIn : OptionIn):
     """Creates a New Option"""
     return OptionRepository.create(db,movIn).to_optionOut()
 
+@router.post("/options/list", response_model=List[OptionOut], status_code=status.HTTP_201_CREATED, tags=["option"])
+def new_roteiro_option_by_list(movIn : List[OptionIn]):
+    """Creates a New Option"""
+    saida = []
+    for o in movIn:
+        saida.append(OptionRepository.create(db,o).to_optionOut())
+    return saida
+
 @router.delete("/options/{id_roteiro}", status_code=status.HTTP_204_NO_CONTENT, tags=["option"])
 def delete_all_by_roteiro(id_roteiro: int):
     """Deletes a Roteiros information"""
