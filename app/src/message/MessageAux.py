@@ -29,14 +29,22 @@ os.environ["OPENAI_API_KEY"] = os.getenv("GPT_KEY")
 MODEL = ChatOpenAI(model="gpt-4")
 
 
-def fetchNextTag(transcript: str, roteiro: RoteiroOut):
+def fetchNextTag(transcript: str, roteiro: Dict, context:List[str]):
+
+    prpt = "O contexto da Atividade para o usuário é:\n" + roteiro["context"] + "\n\n" + f"Você deve atuar como o {roteiro['chat']}" + "\n\n Essa é a conversa até agora: \n"
+
+    senders = ["user" if x[0] else "chat" for x in context]
+    messages = [x[1] for x in context]
 
 
-    prpt = f'''
-        Dada a mensagem '{transcript}', ela diz respeito a qual da opções a seguir:
+    for i in range(len(context)):
+        prpt += roteiro[senders[i]] + " - " + messages[i] + "\n\n"
+
+    prpt += f'''
+        \nDada a mensagem '{transcript}' vindo do {roteiro['user']}, qual dessas opções é mais condizente com o que foi perguntado:
     '''
 
-    for tag in OptionRepository.get_tags_by_roteiro(db, roteiro.id_roteiro):
+    for tag in OptionRepository.get_tags_by_roteiro(db, roteiro['id_roteiro']):
         prpt += '\n ' + tag + ' \n'
 
     prpt += '\n {question}'
@@ -72,7 +80,7 @@ def fetchData(message: MessageIn) -> str:
 
     print("pegando a próxima etapa")
     # Pegamos a próxima etapa da conversa
-    next_tag = fetchNextTag(message.url, script)
+    next_tag = fetchNextTag(message.url, script.model_dump(), full_context)
 
     print("pegando as opções")
     # Pegamos as opções da última etapa
