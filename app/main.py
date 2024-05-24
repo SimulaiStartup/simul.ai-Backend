@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.message import MessageRoutes
 from src.roteiro import RoteiroRoutes
 from src.option import OptionRoutes
+from src.checklist import ChecklistRoutes
 from database import engine, Base
 from src.services.AudioService import speech_to_text
 from src.message.MessageAux import fetchData
@@ -28,6 +29,7 @@ app.add_middleware(
 app.include_router(MessageRoutes.router)
 app.include_router(RoteiroRoutes.router)
 app.include_router(OptionRoutes.router)
+app.include_router(ChecklistRoutes.router)
 
 # Define root route handler
 @app.get("/")
