@@ -12,6 +12,6 @@ class ChecklistCreate(BaseModel):
 
 
 class ChecklistOut(BaseModel):
-    id_checklist: str
+    id_checklist: int
     id_roteiro: int
     question: str
