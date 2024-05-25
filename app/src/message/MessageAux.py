@@ -28,6 +28,21 @@ os.environ["OPENAI_API_KEY"] = os.getenv("GPT_KEY")
 
 MODEL = ChatOpenAI(model="gpt-4")
 
+def initialize_conversation(message:MessageIn):
+
+    print("entrei")
+
+    # Pegamos as opções da última etapa
+    options_roteiro = OptionRepository.get_by_tag_and_roteiro(db, "INIT", message.id_roteiro)
+    for op in options_roteiro:
+        print(op.text)
+
+    # Salva a resposta do usuário e a do Chat na base de dados
+    MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[0].video, "INIT")
+    print("isso aq tá funcionando")
+
+
+
 
 def fetchNextTag(transcript: str, roteiro: Dict, context:List[str]):
 
@@ -68,8 +83,8 @@ def fetchData(message: MessageIn) -> str:
     if MessageRepository.check_by_conversation(db, message.id_conversation):
         context = MessageRepository.get_by_conversation(db, message.id_conversation)
     else:
-        # se a conversa tiver acabado de começar, inicializamos ela
-        context = [MessageRepository.initialize_conversation(db, message)]
+        initialize_conversation(message)
+        context = MessageRepository.get_by_conversation(db, message.id_conversation)
 
     print("construindo o prompt")
     full_context = [(message.sender, message.transcript) for message in context]

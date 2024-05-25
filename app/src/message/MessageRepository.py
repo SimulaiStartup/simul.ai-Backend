@@ -86,11 +86,14 @@ class MessageRepository:
     
     
     def get_next_message_by_conversation(db : Session, id_conversation : int) -> int:
-        messages = MessageRepository.get_by_conversation(db, id_conversation)
+        try:
+            messages = MessageRepository.get_by_conversation(db, id_conversation)
 
-        id_message = messages[-1].id_message + 1
+            id_message = messages[-1].id_message + 1
 
-        return id_message
+            return id_message
+        except:
+            return 0
     
     def delete_all(db: Session):
         rows_deleted = db.query(Message).delete()
