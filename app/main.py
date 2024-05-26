@@ -7,6 +7,8 @@ from src.checklist import ChecklistRoutes
 from database import engine, Base
 from src.services.AudioService import speech_to_text
 from src.message.MessageAux import fetchData
+from src.checklist.FeedbackAux import fetchFeedback
+from src.checklist.ChecklistDTO import FeedbackOut
 from src.message.MessageDTO import MessageIn
 from src.message.MessageDTO import MessageOut
 from pydantic import BaseModel
@@ -41,3 +43,7 @@ def process_and_answer(body: MessageIn):
     # body.url = speech_to_text(body.url)
     print(body.url)
     return fetchData(body)
+
+@app.get("/conversation/feedback/{id_conversation}", response_model=FeedbackOut)
+def process_and_answer(id_conversation: str):
+    return fetchFeedback(id_conversation)

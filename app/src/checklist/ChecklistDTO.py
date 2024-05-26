@@ -15,3 +15,8 @@ class ChecklistOut(BaseModel):
     id_checklist: int
     id_roteiro: int
     question: str
+
+class FeedbackOut(BaseModel):
+    id_conversation: str
+    feedback: List[str]
+    nota:str

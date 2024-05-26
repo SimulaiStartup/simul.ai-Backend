@@ -4,18 +4,15 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-from typing import List, Dict
-
-import pandas as pd
+from typing import List, Dict, Tuple
 
 
-from src.message.Message import Message
 from src.message.MessageDTO import MessageIn, MessageOut
 from src.message.MessageRepository import MessageRepository
 from src.roteiro.RoteiroRepository import RoteiroRepository
 from src.roteiro.Roteiro import Roteiro
-from src.roteiro.RoteiroDTO import RoteiroOut
 from src.option.OptionRepository import OptionRepository
+from src.checklist.ChecklistRepository import ChecklistRepository
 from database import get_db
 
 db = get_db()
@@ -23,10 +20,9 @@ db = get_db()
 dotenv.load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("GPT_KEY")
 
-# https://python.langchain.com/docs/expression_language/get_started/
-
-
 MODEL = ChatOpenAI(model="gpt-4")
+
+
 
 def initialize_conversation(message:MessageIn):
 
