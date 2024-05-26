@@ -56,7 +56,7 @@ def fetchNextTag(transcript: str, roteiro: Dict, context:List[str]):
         prpt += roteiro[senders[i]] + " - " + messages[i] + "\n\n"
 
     prpt += f'''
-        \nDada a mensagem '{transcript}' vindo do {roteiro['user']}, qual dessas opções é mais condizente com o que foi perguntado:
+        \nDada a mensagem '{transcript}' vindo do {roteiro['user']}, o contexto de uma continuação da conversa seria mais condizente com qual das opções abaixo:
     '''
 
     for tag in OptionRepository.get_tags_by_roteiro(db, roteiro['id_roteiro']):
@@ -69,7 +69,7 @@ def fetchNextTag(transcript: str, roteiro: Dict, context:List[str]):
 
     chain = prompt | MODEL | output_parser
 
-    n = chain.invoke({f"question":'Retorne apenas a opção, da mesma maneira que ela foi escrita'})
+    n = chain.invoke({f"question":"Retorne apenas a opção, da mesma maneira que ela foi escrita. Caso possa ser o final da conversa, retorne 'END' "})
 
     return n
 
@@ -123,7 +123,7 @@ def fetchData(message: MessageIn) -> str:
     MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[response-1].text,next_tag)
 
     # Retorna a resposta do chat
-    if next_tag != 'END': return MessageOut(link = options_roteiro[response-1].video, end=False)
+    if 'END' not in next_tag: return MessageOut(link = options_roteiro[response-1].video, end=False)
 
     return MessageOut(link = options_roteiro[response-1].video, end=True)
 
