@@ -50,7 +50,7 @@ def feedback(roteiro: Dict, context:List[Tuple[bool, str]]):
 
     chain = prompt | MODEL | output_parser
 
-    n = chain.invoke({f"question":"Retorne uma avaliação separada por critério, mostrando detalhadamente o que foi atingido e o que não foi para cada um. Na última linha, coloque apenas o número total de critérios atingidos."})
+    n = chain.invoke({f"question":"Retorne uma avaliação separada por critério, mostrando detalhadamente o que foi atingido e o que não foi para cada um."})
 
     return n
 
