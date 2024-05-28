@@ -18,5 +18,4 @@ class ChecklistOut(BaseModel):
 
 class FeedbackOut(BaseModel):
     id_conversation: str
-    feedback: List[str]
-    nota:str
+    feedback: str

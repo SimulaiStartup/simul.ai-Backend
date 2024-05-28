@@ -77,18 +77,7 @@ def fetchFeedback(id_conversation: str) -> str:
     # Pegamos a próxima etapa da conversa
     f = feedback(script.model_dump(), full_context)
 
-    f = f.split("\n")
-
-    nota = f[-1]
-
-    nota = re.findall("\d", nota)[0]
-
-
-    f = f[:-1]
-
-    f = list(filter(lambda x: x!="", f))
-
     return FeedbackOut(
         id_conversation=id_conversation, 
-        feedback=f,
-        nota = f"{nota}/{len(f)}")
+        feedback=f
+    )
