@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "402aa1e7-6d75-4e14-bc2a-de4a72aa4ffc",
+		"name": "Simulai - Roteiro de Anamnese",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) in \"Tests\" to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23129826",
+		"_collection_link": "https://universal-equinox-259185.postman.co/workspace/Organice~e528034c-aad9-4315-b4e9-8c0ca32fd1f8/collection/23129826-402aa1e7-6d75-4e14-bc2a-de4a72aa4ffc?action=share&source=collection_link&creator=23129826"
+	},
+	"item": [
+		{
+			"name": "post roteiro Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"context\":\"O Médico está analisando os sintomas de um paciente com problemas psicológicos\",\n  \"chat\":\"Paciente\",\n  \"user\":\"Médico\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/roteiros",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"roteiros"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get roteiros",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/roteiros",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"roteiros"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Informações Pessoais",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\":\"Meu nome completo é João Martins, não uso nome social\",\n        \"video\":\"Meu nome completo é João Martins, não uso nome social\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\":\"Tenho 41 anos, sou solteiro e trabalho como gerente de projetos\",\n        \"video\":\"Tenho 41 anos, sou solteiro e trabalho como gerente de projetos\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\":\"Sou de São Paulo. Por causa da obra lá em casa, atualmente estou morando em um apartamento.\",\n        \"video\":\"Sou de São Paulo. Por causa da obra lá em casa, atualmente estou morando em um apartamento.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\": \"Moro aqui faz uns dois meses, mas sou de São Paulo.\",\n        \"video\": \"Moro aqui faz uns dois meses, mas sou de São Paulo.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\":\"Sou católico, mas não muito praticante. Sabe como é que é.\",\n        \"video\":\"Sou católico, mas não muito praticante. Sabe como é que é.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Informações Pessoais/Identificação\",\n        \"text\":\"Fiz faculdade de administração, e hoje trabalho como gerente de projetos.\",\n        \"video\":\"Fiz faculdade de administração, e hoje trabalho como gerente de projetos.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Postura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Postura em Relação a Consulta\",\n        \"text\":\"Eu tento ser o mais honesto possível.\",\n        \"video\":\"Eu tento ser o mais honesto possível.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Postura em Relação a Consulta\",\n        \"text\":\"Me desculpa, estou um pouco estressado\",\n        \"video\":\"Me desculpa, estou um pouco estressado\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Propósito da Consulta e Sentimentos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Propósito Geral da Consulta e Sentimento Gerais da Pessoa\",\n        \"text\":\"Estou assustado comigo, acho que estou enlouquecendo. É como se eu estivesse perdendo o controle sobre tudo. A obra que deveria terminar em meses se arrasta há mais de um ano. É um limbo. Qualquer decisão me deixa estressado. Eu mal consigo me reconhecer, essa instabilidade me deixa desesperado.\",\n        \"video\":\"Estou assustado comigo, acho que estou enlouquecendo. É como se eu estivesse perdendo o controle sobre tudo. A obra que deveria terminar em meses se arrasta há mais de um ano. É um limbo. Qualquer decisão me deixa estressado. Eu mal consigo me reconhecer, essa instabilidade me deixa desesperado.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Propósito Geral da Consulta e Sentimento Gerais da Pessoa\",\n        \"text\":\"Porque estou a ponto de enlouquecer! É insuportável. Moro num flat há um ano, e não ter minha casa arrumada me faz sentir deslocado. Cada decisão que preciso tomar é uma tortura, e eu me vejo chorando por coisas tão banais. Eu só quero voltar a me sentir normal, a não ter medo de escolher algo tão simples como um puxador de gavetas. É humilhante e assustador sentir-se tão perdido.\",\n        \"video\":\"Porque estou a ponto de enlouquecer! É insuportável. Moro num flat há um ano, e não ter minha casa arrumada me faz sentir deslocado. Cada decisão que preciso tomar é uma tortura, e eu me vejo chorando por coisas tão banais. Eu só quero voltar a me sentir normal, a não ter medo de escolher algo tão simples como um puxador de gavetas. É humilhante e assustador sentir-se tão perdido.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Propósito Geral da Consulta e Sentimento Gerais da Pessoa\",\n        \"text\":\"Outro dia, fui à loja escolher puxadores e simplesmente travei. Cada opção parecia uma decisão enorme, e o medo de errar tomou conta de mim. Meu coração começou a acelerar, minhas mãos tremeram, e senti que não aguentava. Saí da loja sem comprar nada, chorando no carro, pensando, 'Como minha vida chegou a esse ponto?' Sinto que não me reconheço mais.\",\n        \"video\":\"Outro dia, fui à loja escolher puxadores e simplesmente travei. Cada opção parecia uma decisão enorme, e o medo de errar tomou conta de mim. Meu coração começou a acelerar, minhas mãos tremeram, e senti que não aguentava. Saí da loja sem comprar nada, chorando no carro, pensando, 'Como minha vida chegou a esse ponto?' Sinto que não me reconheço mais.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Comportamentos e Sintomas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Fico o tempo todo com esta sensação do coração saindo pela boca.\",\n        \"video\":\"Fico o tempo todo com esta sensação do coração saindo pela boca.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Não me sinto triste ou desanimado, apenas extremamente ansioso e incapaz de relaxar.\",\n        \"video\":\"Não me sinto triste ou desanimado, apenas extremamente ansioso e incapaz de relaxar.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Demoro muito para dormir, chego a ficar mais de 3 horas para conseguir adormecer. Uma vez dormindo, durmo bem, mas é difícil levantar. Acordo com sono, sem vontade de fazer nada.\",\n        \"video\":\"Demoro muito para dormir, chego a ficar mais de 3 horas para conseguir adormecer. Uma vez dormindo, durmo bem, mas é difícil levantar. Acordo com sono, sem vontade de fazer nada.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Aliás, estou engordando. Tenho comido muito chocolate, muita besteira. Nunca fui disso, sempre comi direitinho, mas agora, se tem uma barra de chocolate na frente, quando vejo, já foi inteira, e nem senti o gosto.\",\n        \"video\":\"Aliás, estou engordando. Tenho comido muito chocolate, muita besteira. Nunca fui disso, sempre comi direitinho, mas agora, se tem uma barra de chocolate na frente, quando vejo, já foi inteira, e nem senti o gosto.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Não tenho tido dores de cabeça ou tonturas, principalmente são as palpitações e a ansiedade que me incomodam.\",\n        \"video\":\"Não tenho tido dores de cabeça ou tonturas, principalmente são as palpitações e a ansiedade que me incomodam.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Interrogatório Sobre Sintomas e Comportamentos Específicos\",\n        \"text\":\"Ah, não. Não aconteceu nada assim comigo. Eu só tenho estado realmente estressado com toda essa situação da obra e mudança. Mas não, não vi ou ouvi coisas que não estavam lá. Só estou cansado de toda essa bagunça.\",\n        \"video\":\"Ah, não. Não aconteceu nada assim comigo. Eu só tenho estado realmente estressado com toda essa situação da obra e mudança. Mas não, não vi ou ouvi coisas que não estavam lá. Só estou cansado de toda essa bagunça.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Histórico Médico e Familiar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Histórico Médico ou Informações de Saúde Geral\",\n        \"text\":\"Meu pai tem hipertensão, mas fora isso não há grandes problemas de saúde na família.\",\n        \"video\":\"Meu pai tem hipertensão, mas fora isso não há grandes problemas de saúde na família.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Histórico Médico ou Informações de Saúde Geral\",\n        \"text\":\"Sempre fui saudável. Meu pneumologista e cardiologista disseram que estou bem fisicamente.\",\n        \"video\":\"Sempre fui saudável. Meu pneumologista e cardiologista disseram que estou bem fisicamente.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Histórico Médico ou Informações de Saúde Geral\",\n        \"text\":\"Não estou tomando nenhum medicamento atualmente.\",\n        \"video\":\"Não estou tomando nenhum medicamento atualmente.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Histórico Médico ou Informações de Saúde Geral\",\n        \"text\":\"Nunca tive que consultar um psicólogo ou psiquiatra, mas estou começando a pensar que talvez devesse.\",\n        \"video\":\"Nunca tive que consultar um psicólogo ou psiquiatra, mas estou começando a pensar que talvez devesse.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Estilo de Vida, Pessoal e Hábitos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Não tenho conseguido manter uma rotina de exercícios, mas eu tenho tentado.\",\n        \"video\":\"Não tenho conseguido manter uma rotina de exercícios, mas eu tenho tentado.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Fiz faculdade de administração, e hoje trabalho com vendas de adubo.\",\n        \"video\":\"Fiz faculdade de administração, e hoje trabalho com vendas de adubo.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Não uso nada. Só bebo ocasionalmente, de forma moderada.\",\n        \"video\":\"Não uso nada. Só bebo ocasionalmente, de forma moderada.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Sou católico, mas não muito praticante. Sabe como é que é.\",\n        \"video\":\"Sou católico, mas não muito praticante. Sabe como é que é.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Fiz faculdade de administração, e hoje trabalho com vendas de adubo.\",\n        \"video\":\"Fiz faculdade de administração, e hoje trabalho com vendas de adubo.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Tenho alguns amigos próximos, e minha família me apoia, mas eles não sabem o quanto estou lutando.\",\n        \"video\":\"Tenho alguns amigos próximos, e minha família me apoia, mas eles não sabem o quanto estou lutando.\"\n    }, \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Estilo de Vida, Vida Pessoal e Hábitos\",\n        \"text\":\"Meu trabalho está se tornando cada vez mais estressante. Estou desatento, e levo muito mais tempo para executar tarefas simples.\",\n        \"video\":\"Meu trabalho está se tornando cada vez mais estressante. Estou desatento, e levo muito mais tempo para executar tarefas simples.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Orientação de Tratamento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Assegurando e Orientando sobre o Tratamento\",\n        \"text\":\"Muito obrigado. Fico mais tranquilo com a sua ajuda. Mais alguma coisa?\",\n        \"video\":\"Muito obrigado. Fico mais tranquilo com a sua ajuda. Mais alguma coisa?\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Assegurando e Orientando sobre o Tratamento\",\n        \"text\":\"Isso me alivia um pouco. Obrigado.\",\n        \"video\":\"Isso me alivia um pouco. Obrigado.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Assegurando e Orientando sobre o Tratamento\",\n        \"text\":\"Muito obrigado. Sinto-me um pouco perdido e qualquer ajuda é bem-vinda.\",\n        \"video\":\"Muito obrigado. Sinto-me um pouco perdido e qualquer ajuda é bem-vinda.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Assegurando e Orientando sobre o Tratamento\",\n        \"text\":\"Sim, vamos fazer isso. Quero resolver isso o quanto antes.\",\n        \"video\":\"Sim, vamos fazer isso. Quero resolver isso o quanto antes.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Hipótese Diagnóstica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Hipótese Diagnóstica\",\n        \"text\":\"Por favor, me diga o que você suspeita? Estou pronta para ouvir\",\n        \"video\":\"Por favor, me diga o que você suspeita? Estou pronta para ouvir\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Hipótese Diagnóstica\",\n        \"text\":\"Mas o que é isso? É algo grave? É tratável?\",\n        \"video\":\"Mas o que é isso? É algo grave? É tratável?\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Hipótese Diagnóstica\",\n        \"text\":\"Isso me alivia um pouco. Obrigado.\",\n        \"video\":\"Isso me alivia um pouco. Obrigado.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Hipótese Diagnóstica\",\n        \"text\":\"Aprecio muito isso. Sinto-me um pouco perdido e qualquer ajuda é bem-vinda.\",\n        \"video\":\"Aprecio muito isso. Sinto-me um pouco perdido e qualquer ajuda é bem-vinda.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Hipótese Diagnóstica\",\n        \"text\":\"Sim, vamos fazer isso. Quero resolver isso o quanto antes.\",\n        \"video\":\"Sim, vamos fazer isso. Quero resolver isso o quanto antes.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Finalização",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Finalização da Consulta e Agradecimentos END\",\n        \"text\":\"Obrigado por tudo. Espero que possamos encontrar uma solução em breve.\",\n        \"video\":\"Obrigado por tudo. Espero que possamos encontrar uma solução em breve.\"\n    },\n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Finalização da Consulta e Agradecimentos END\",\n        \"text\":\"Certamente entrarei em contato se necessário. Obrigado!\",\n        \"video\":\"Certamente entrarei em contato se necessário. Obrigado!\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - INIT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"INIT\",\n        \"text\":\"Olá, tudo bem? Estou precisando de ajuda.\",\n        \"video\":\"Olá, tudo bem? Estou precisando de ajuda.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "post option - Confusão",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"Confusão\",\n        \"text\":\"Desculpa, não entendi.\",\n        \"video\":\"Desculpa, não entendi.\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/options/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"list"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Get data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/options/roteiro/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"roteiro",
+						"2"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "post message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_conversation\": \"teste-feedback\",\r\n    \"id_roteiro\": 2,\r\n    \"url\": \"Bom, qualquer coisa pode me chamar. Mas acredito que estamos encerrados por hoje. Se cuide.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/conversation",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"conversation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post checklist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_roteiro\": 2,\r\n    \"list_questions\": [\r\n        \"Cumprimentou o paciente?\",\r\n        \"Em algum momento chamou o paciente pelo nome?\",        \r\n        \"Expressou-se de forma segura?\",\r\n        \"Expressou verbalmente compreensão e continência do estado emocional do paciente?\",\r\n        \"Investigou apropriadamente a alteração de humor? (depressão/mania)\",\r\n        \"Investigou transtorno de pânico?\",\r\n        \"Investigou sintomas psicóticos?\",\r\n        \"Formulou a hipótese de Síndrome Ansiosa?\",\r\n        \"Formulou a hipótese de Transtorno de Ansiedade Generalizada?\",\r\n        \"Orientou adequadamente, reassegurando que para esta doença tem tratamento e que não se trata de psicose?\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/checklists/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"checklists",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/conversation/feedback/teste-feedback",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"conversation",
+						"feedback",
+						"teste-feedback"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
