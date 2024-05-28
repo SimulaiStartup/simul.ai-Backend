@@ -471,7 +471,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"INIT\",\n        \"text\":\"Olá, tudo bem? Estou precisando de ajuda.\",\n        \"video\":\"1CA67r68gtDmhiqWqQxVnZksbosObwc9e\"\n    }\n]",
+					"raw": "[   \n    {\n        \"id_roteiro\":2,\n        \"tag\":\"INIT\",\n        \"text\":\"Bom dia, podemos começar a consulta? Estou me sentindo mal e preciso da sua ajuda\",\n        \"video\":\"oaBPGcDWXSWv3KoRv92m0XhGNddIUxTb\"\n    }\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -566,6 +566,41 @@
 						"options",
 						"roteiro",
 						"2"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "delete option",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/options/32/option",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"options",
+						"32",
+						"option"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
