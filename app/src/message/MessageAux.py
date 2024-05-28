@@ -34,7 +34,7 @@ def initialize_conversation(message:MessageIn):
         print(op.text)
 
     # Salva a resposta do usuário e a do Chat na base de dados
-    MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[0].video, "INIT")
+    MessageRepository.create_chat_message(db, message.id_conversation, message.id_roteiro, options_roteiro[0].text, "INIT")
     print("isso aq tá funcionando")
 
 
